@@ -1,20 +1,20 @@
 import fs from 'fs';
 
-const path = 'src/fs/files/fresh.txt';
+const PATH = 'src/fs/files/fresh.txt';
+const CONTENT = 'I am fresh and young';
 
 const create = async () => {
   try {
-    await fs.promises.access(path, fs.constants.F_OK);
-    console.log('File already exists');
-  } catch {
-    try {
-      fs.writeFile(path, 'I am fresh and young', (err) => {
-        if (err) throw console.error('FS operation failed');
-        console.log('File created');
-      })
-    } catch (err) {
-      console.error(err);
+    if (fs.existsSync(PATH)) {
+      return console.log('FS operation failed');
     }
+
+    fs.writeFile(PATH, CONTENT, (err) => {
+      if (err) throw err;
+      console.log('File created');
+    })
+  } catch (err) {
+    console.error(err);
   }
 };
 
