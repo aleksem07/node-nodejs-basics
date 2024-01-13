@@ -13,7 +13,7 @@ const create = async () => {
       if (err) throw err;
       console.log('File created');
     })
-  } catch (err) {
+  } catch(err) {
     throw err;
   }
 };

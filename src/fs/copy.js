@@ -12,7 +12,7 @@ const copy = async () => {
       if (err) throw err;
       console.log('File copied');
     })
-  } catch (err) {
+  } catch(err) {
     throw err;
   }
 }
