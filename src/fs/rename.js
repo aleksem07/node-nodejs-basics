@@ -6,7 +6,7 @@ const PROPER_FILE = 'src/fs/files/properFilename.txt';
 const rename = async () => {
     try {
       if (fs.existsSync(PROPER_FILE) || !fs.existsSync(WRONG_FILE)) {
-        return console.log('FS operation failed');
+        throw new Error('FS operation failed');
       }
 
       fs.rename(WRONG_FILE, PROPER_FILE, err => {
@@ -14,7 +14,7 @@ const rename = async () => {
         console.log('File renamed');
       })
     } catch(err) {
-      console.error(err);
+      throw err;
     }
 };
 
