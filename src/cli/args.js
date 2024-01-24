@@ -3,7 +3,7 @@ const parseArgs = () => {
   const options = [];
   const hasValidArguments = args.some(arg => arg.startsWith('--'))
 
-    if (args.length < 2 || !hasValidArguments) {
+  if (args.length < 2 || !hasValidArguments) {
     console.error('Invalid number of command line arguments');
     return;
   }
