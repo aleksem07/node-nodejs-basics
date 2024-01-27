@@ -1,4 +1,4 @@
-import { Transform } from 'stream';
+import { Transform, pipeline, finished } from 'stream';
 
 const stdin = process.stdin;
 const stdout = process.stdout;
@@ -9,21 +9,25 @@ const transform = async () => {
   stdout.write('\n')
 
   const transformer = new Transform({
-    transform(chunk, _, callback) {
+    transform(chunk, _, cb) {
       if (chunk.toString().trim() === 'exit') {
         console.log('\nGoodbye!');
         process.exit();
       }
 
-      const reversedChunk = chunk.toString().split('').reverse().join('');
+      const reversedChunk = chunk.toString().trim().split('').reverse().join('');
 
-      this.push(reversedChunk + '\n');
-
-      callback();
+      cb(null, reversedChunk + '\n');
     },
   });
   
-  stdin.pipe(transformer).pipe(stdout);
+  pipeline(
+    stdin,
+    transformer,
+    stdout,
+    err => {
+      console.log(`Error: ${err}`)
+  })
 
   process.on('SIGINT', () => {
     console.log('\n\nGoodbye!');
